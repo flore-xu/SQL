@@ -1,0 +1,11 @@
+-- 180. Consecutive Numbers
+
+-- COUNT() OVER() with RANGE
+WITH CTE AS (
+ SELECT num,
+ COUNT(*) OVER (PARTITION BY num ORDER BY id RANGE BETWEEN 2 PRECEDING AND CURRENT ROW) AS cnt
+ FROM Logs
+ )
+SELECT DISTINCT num AS ConsecutiveNums
+FROM CTE 
+WHERE cnt >= 3;
